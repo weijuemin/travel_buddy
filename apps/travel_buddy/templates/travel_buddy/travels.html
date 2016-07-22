@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Travel Manager</title>
+	{% load staticfiles %}
+    <script src="{% static 'travel_buddy/js/jquery.js' %}"></script>
+    <script src="{% static 'travel_buddy/js/Bootstrap.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'travel_buddy/css/Bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'travel_buddy/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'travel_buddy/css/index.css' %}">
+    <script src="{% static 'travel_buddy/js/main.js' %}"></script>
+</head>
+<body>
+	<div class="bg"></div>
+	<nav class="navbar navbar-inverse radius">
+	  <div class="container-fluid">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a class="navbar-brand" href="#">Travel Manager</a>
+	    </div>
+		
+	    <!-- Collect the nav links, forms, and other content for toggling -->
+	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="{% url 'tb_show_travels' %}">Plans <span class="sr-only">(current)</span></a></li>
+          <li><a href="{% url 'tb_add_travel' %}">Add new plan</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#">{{ request.session.fname }}. {{ request.session.lInit }}</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Admin tool</a></li>
+              <li><a href="#">Settings</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="{% url 'tb_logout' %}">Log out</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+	  </div><!-- /.container-fluid -->
+	</nav>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="ownPlans col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xm-12">
+				<h2>Welcome, {{ curUser.first_name }}!</h2>
+				<table class="table table-striped">
+					<caption>You Trip Schedules</caption>
+					<tr>
+						<th>Destination</th>
+						<th>Travel Start Date</th>
+						<th>Travel End Date</th>
+						<th>Plan</th>
+					</tr>
+					{% for travel in ownTravels %}
+					<tr>
+						<td>{{ travel.destination }}</td>
+						<td>{{ travel.plan_detail }}</td>
+						<td>{{ travel.start_date }}</td>
+						<td>{{ travel.end_date }}</td>
+					</tr>
+					{% endfor %}
+				</table>
+				<table class="table table-striped">
+					<caption>Other Trip Schedules</caption>
+					<tr>
+						<th>Name</th>
+						<th>Destination</th>
+						<th>Travel Start Date</th>
+						<th>Travel End Date</th>
+						<th>Plan</th>
+						<th>Action</th>
+					</tr>
+					{% for travel in otherTravels %}
+					<tr>
+						<td>{{ travel.first_name }} {{ travel.last_name }}</td>
+						<td>{{ travel.destination }}</td>
+						<td>{{ travel.plan_detail }}</td>
+						<td>{{ travel.start_date }}</td>
+						<td>{{ travel.end_date }}</td>
+						<td><a href="/travelbuddy/travel/join/destination/{{travel.travel_id}}">Join</a></td>
+					</tr>
+					{% endfor %}
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

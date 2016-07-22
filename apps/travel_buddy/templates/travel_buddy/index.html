@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Travel Manager</title>
+	{% load staticfiles %}
+    <script src="{% static 'travel_buddy/js/jquery.js' %}"></script>
+    <script src="{% static 'travel_buddy/js/Bootstrap.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'travel_buddy/css/Bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'travel_buddy/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'travel_buddy/css/index.css' %}">
+    <script src="{% static 'travel_buddy/js/main.js' %}"></script>
+</head>
+<body>
+	<div class="bg"></div>
+	<nav class="navbar navbar-inverse radius">
+	  <div class="container-fluid">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a class="navbar-brand" href="#">Travel Manager</a>
+	    </div>
+		
+	    <!-- Collect the nav links, forms, and other content for toggling -->
+	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	      <ul class="nav navbar-nav">
+	        <li><a href="#">Home</a></li>
+	      </ul>
+	      <ul class="nav navbar-nav navbar-right">
+	        <li><a href="#">Sign in</a></li>
+	      </ul>
+	    </div><!-- /.navbar-collapse -->
+	  </div><!-- /.container-fluid -->
+	</nav>
+	<div class="container-fluid">
+		<div class="row">
+			<h2 class="title">Welcome to Travel Manager!</h2>
+			<div class="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-10 col-xm-12">
+				<form action="{% url 'tb_login_process' %}" class="lrforms" id="lform" method="post">
+				{% csrf_token %}
+					<div class="form-group">
+						<label for="emailInput">Email address</label>
+						<input type="text" class="form-control" id="emailInput" name="email" placeholder="Email">
+						{% if msg.email %}
+						<p class="errMsg">{{msg.email}}</p>
+						{% endif %}
+						{% if msg.emailFormat %}
+						<p class="errMsg">{{msg.emailFormat}}</p>
+						{% endif %}
+						{% if msg.emailNotExist %}
+						<p class="errMsg">{{msg.emailNotExist}}</p>
+						{% endif %}
+					</div>
+					<div class="form-group">
+						<label for="passwordInput">Password</label>
+						<input type="password" class="form-control" id="passwordInput" name="password" placeholder="Password">
+						{% if msg.password %}
+						<p class="errMsg">{{msg.password}}</p>
+						{% endif %}
+						{% if msg.pwErr %}
+						<p class="errMsg">{{msg.pwErr}}</p>
+						{% endif %}
+					</div>
+					<input type="hidden" class="hidden" name="existCheck" value="{{ request.session.exist }}">
+					<button type="submit" class="btn btn-primary">Login</button>
+				</form>
+			</div>
+			<div class="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-10 col-xm-12">
+				<form action="{% url 'tb_registration_process' %}" class="lrforms" id="rform" method="post">
+				{% csrf_token %}
+					<div class="form-group">
+						<label for="fnameInput">First name</label>
+						<input type="text" class="form-control" id="fnameInput" name="first_name" placeholder="First name">
+						{% if msg.first_name %}
+						<p class="errMsg">{{msg.first_name}}</p>
+						{% endif %}
+					</div>
+					<div class="form-group">
+						<label for="lnameInput">Last name</label>
+						<input type="text" class="form-control" id="lnameInput" name="last_name" placeholder="Last name">
+						{% if msg.last_name %}
+						<p class="errMsg">{{msg.last_name}}</p>
+						{% endif %}
+					</div>
+					<div class="form-group">
+						<label for="emailInput">Email address</label>
+						<input type="text" class="form-control" id="emailInput" name="email" placeholder="Email">
+						{% if msg.email %}
+						<p class="errMsg">{{msg.email}}</p>
+						{% endif %}
+						{% if msg.emailFormat %}
+						<p class="errMsg">{{msg.emailFormat}}</p>
+						{% endif %}
+						{% if msg.emailExist %}
+						<p class="errMsg">{{msg.emailExist}}</p>
+						{% endif %}
+					</div>
+					<div class="form-group">
+						<label for="passwordInput">Password</label>
+						<input type="password" class="form-control" id="pw" name="password" placeholder="Password">
+						{% if msg.password %}
+						<p class="errMsg">{{msg.password}}</p>
+						{% endif %}
+					</div>
+					<div class="form-group">
+						<label for="passwordInput">Confirm password</label>
+						<input type="password" class="form-control" id="pwConf" placeholder="Confirm password">
+					</div>
+					<input type="hidden" class="hidden" name="existCheck" value="{{ request.session.exist }}">
+					<button type="submit" class="btn btn-primary regBtn">Register</button>
+				</form>
+			</div>
+		</div>
+		<div class="optionSwitch">
+			<button class="switch btn btn-link">Not a member yet? Register now!</button>
+			<button class="switch btn btn-link hide">Already a member? Log in</button>		
+		</div>
+	</div>
+</body>
+</html>
